@@ -15,10 +15,16 @@ public class PlayerHealth : MonoBehaviour {
 
 	void Awake () {
         currentHealth = startingHealth;
-	}
-	
-	void Update () {
-		                //Jeszcze trzeba bedzie polaczyc to w jakim momencie gracz dostaje DMG
+        healthSlider.value = CalculateHealth();
+    }
+	int CalculateHealth()
+    {
+        return currentHealth / startingHealth;
+       
+    }
+	void Update ()
+    {
+        healthSlider.value = (currentHealth * 1.0f  / startingHealth);        //Jeszcze trzeba bedzie polaczyc to w jakim momencie gracz dostaje DMG
 	}
 
     public void TakeDamage (int amount)
