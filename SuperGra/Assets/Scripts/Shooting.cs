@@ -38,7 +38,7 @@ public class Shooting : MonoBehaviour {
         tempRigidBody.AddForce(transform.forward * projectileForce);
 
         //zniszczenie pocisku po czasie
-        Destroy(tempProjectile, 5.0f);
+        Destroy(tempProjectile, 3.0f);
 
     }
 }
