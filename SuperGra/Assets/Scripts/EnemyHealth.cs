@@ -6,6 +6,7 @@ public class EnemyHealth : MonoBehaviour {
 
     public int StartingHealth;
     private float CurrentHealth;
+    GameObject enemy;
 
 	// Use this for initialization
 	void Start () {
@@ -17,6 +18,7 @@ public class EnemyHealth : MonoBehaviour {
 		if(CurrentHealth == 0)
         {
             //Destroy.              DOKONCZYC TU
+            
         }
 	}
 
