@@ -12,36 +12,34 @@ public class EnemyAttack : MonoBehaviour {
     float timer;
 
 	void Awake () {
-        player = GameObject.FindGameObjectWithTag ("Player");
-        playerHealth = player.GetComponent<PlayerHealth> ();
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerHealth = player.GetComponent<PlayerHealth>();
+        Debug.Log(player);
 	}
 	
-	void Update () {
+	void Update ()
+    {
         timer += Time.deltaTime;
 
         if(timer >= timeBetweenAttacks && playerInRange)
         {
             Attack();
+            timer = 0f;
         }
         
-        /*if(playerHealth.currentHealth <= 0)
-        {
-            
-        }*/
+        
 	}
-
-    void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if(other.gameObject == player)
+        if (collision.gameObject == player)
         {
             playerInRange = true;
         }
     }
 
-    void OnTriggerExit(Collider other)
+    private void OnCollisionExit(Collision collision)
     {
-
-        if (other.gameObject == player)
+        if (collision.gameObject == player)
         {
             playerInRange = false;
         }
@@ -49,8 +47,6 @@ public class EnemyAttack : MonoBehaviour {
 
     void Attack()
     {
-        timer = 0f;
-
         if(playerHealth.currentHealth > 0)
         {
             playerHealth.TakeDamage(attackDmg);

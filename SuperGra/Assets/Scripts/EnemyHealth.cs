@@ -2,31 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealth : MonoBehaviour {
+public class EnemyHealth : MonoBehaviour
+{
 
     public int StartingHealth;
     private float CurrentHealth;
     GameObject enemy;
-
-	// Use this for initialization
-	void Start () {
+    
+	void Start ()
+    {
         CurrentHealth = StartingHealth; 
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		if(CurrentHealth == 0)
-        {
-            //Destroy.              DOKONCZYC TU
-            
-        }
+	void Update ()
+    {
+		
 	}
 
-    void Damage(Collider projectile)
+    private void OnCollisionEnter(Collision collision)
     {
-        if(projectile.gameObject.CompareTag("Projectile"))
+        if (collision.gameObject.CompareTag("Projectile"))
         {
             CurrentHealth -= 25;
+            if (CurrentHealth <= 0)
+            {
+                gameObject.SetActive(false);
+
+            }
         }
     }
 }

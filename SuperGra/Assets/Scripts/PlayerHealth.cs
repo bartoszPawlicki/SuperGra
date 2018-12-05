@@ -41,6 +41,6 @@ public class PlayerHealth : MonoBehaviour {
     void Death()
     {
         isDead = true;
-        deathText.text = "YOU DEAD SON";
+        //deathText.text = "YOU DEAD SON";
     }
 }
