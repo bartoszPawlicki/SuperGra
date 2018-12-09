@@ -1,32 +1,45 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor.Build;
 using UnityEngine.Networking;
 
 public class Open : MonoBehaviour
 {
-	private Vector3 startPos;
-	private int dir;
-	private float floatDistance;
+	public Vector3 startPos;
+	public int dir;
+	public float floatDistance;
 	void Start()
 	{
 		startPos = transform.position;
-		dir = 1;	
+		dir = 1;
+//		GameObject enemy = GameObject.Find("Enemy 1");
 	}
+
+	private EnemyHealth Enemy;
 
 	void Update()
 	{
+		if (Enemy.remainingEnemys == 0){
+//zjazd w dół
+/*			if (transform.position.y >= startPos.y + floatDistance)
+			{
+				dir = -1;
+				floatDistance = 0;
+			}*/
+			//góra
+			if (transform.position.y < startPos.y - floatDistance)
+			{
+				dir = 1;
+				floatDistance = 3;
+			}
 
-	if (transform.position.y >= startPos.y + floatDistance)
+		if (transform.position.y < 3)
 		{
-			dir = -1;
-			floatDistance = 0;
+			transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime * dir,
+				transform.position.z);
 		}
-		if (transform.position.y < startPos.y - floatDistance)
-		{
-			dir = 1;
-			floatDistance = 3;
-		}
-
-		transform.position = new Vector3(transform.position.x,transform.position.y+Time.deltaTime*dir, transform.position.z);
 	}
+
+}	
 }
+

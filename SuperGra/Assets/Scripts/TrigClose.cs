@@ -1,0 +1,21 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TrigClose : MonoBehaviour
+{
+
+	GameObject drzwi = GameObject.Find("R1- door");
+	public Open Trigger;
+
+	void OnTriggerExit(Collider other)
+	{
+		if (Trigger.transform.position.y >= Trigger.startPos.y + Trigger.floatDistance)
+		{
+			Trigger.dir = -1;
+			Trigger.floatDistance = 0;
+		}
+		Trigger.transform.position = new Vector3(Trigger.transform.position.x, Trigger.transform.position.y +Time.deltaTime * Trigger.dir,
+			Trigger.transform.position.z);
+	}
+}

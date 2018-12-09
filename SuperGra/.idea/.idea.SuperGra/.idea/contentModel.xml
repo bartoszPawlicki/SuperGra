@@ -6,7 +6,6 @@
     <e p="C:\Users\Maciej Pracucik\Desktop\Programy\Repo\SuperGra\SuperGra" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="NewBehaviourScript.cs" t="Include" />
         <e p="Scripts" t="Include">
           <e p="Ammo.cs" t="Include" />
           <e p="CameraController.cs" t="Include" />
@@ -15,6 +14,7 @@
           <e p="Open.cs" t="Include" />
           <e p="PlayerHealth.cs" t="Include" />
           <e p="Shooting.cs" t="Include" />
+          <e p="TrigClose.cs" t="Include" />
         </e>
         <e p="Yurowm" t="Include">
           <e p="Demo" t="Include">
