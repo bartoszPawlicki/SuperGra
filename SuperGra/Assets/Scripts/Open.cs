@@ -12,14 +12,11 @@ public class Open : MonoBehaviour
 	{
 		startPos = transform.position;
 		dir = 1;
-//		GameObject enemy = GameObject.Find("Enemy 1");
 	}
-
-	private EnemyHealth Enemy;
 
 	void Update()
 	{
-		if (Enemy.remainingEnemys == 0){
+		if (EnemyHealth.remainingEnemies == 0){
 //zjazd w dół
 /*			if (transform.position.y >= startPos.y + floatDistance)
 			{

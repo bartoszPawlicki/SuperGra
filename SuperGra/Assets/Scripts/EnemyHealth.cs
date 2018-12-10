@@ -6,12 +6,12 @@ public class EnemyHealth : MonoBehaviour {
 
     public int StartingHealth;
     private float CurrentHealth;
-	public int remainingEnemys;
+	public static int remainingEnemies;
 
 	// Use this for initialization
 	void Start () {
         CurrentHealth = StartingHealth;
-		remainingEnemys = 0;
+		remainingEnemies = 3;
 	}
 	
 	// Update is called once per frame
@@ -19,7 +19,7 @@ public class EnemyHealth : MonoBehaviour {
 		if(CurrentHealth == 0)
         {
             //Destroy.              DOKONCZYC TU
-	       // remainingEnemys--;
+	        //remainingEnemies--;
         }
 	}
 

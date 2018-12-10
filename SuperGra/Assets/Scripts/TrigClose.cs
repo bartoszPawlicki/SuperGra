@@ -5,7 +5,7 @@ using UnityEngine;
 public class TrigClose : MonoBehaviour
 {
 
-	GameObject drzwi = GameObject.Find("R1- door");
+	GameObject drzwi = GameObject.Find("InvTrig");
 	public Open Trigger;
 
 	void OnTriggerExit(Collider other)
