@@ -10,7 +10,12 @@ public class TrigClose : MonoBehaviour
 
 	void OnTriggerExit(Collider other)
 	{
-		if (Trigger.transform.position.y >= Trigger.startPos.y + Trigger.floatDistance)
+        // logic about what happens when player enters trigger
+
+        //transform.parent.GetComponent<Door>().ChangeDoorState( );
+
+
+        if (Trigger.transform.position.y >= Trigger.startPos.y + Trigger.floatDistance)
 		{
 			Trigger.dir = -1;
 			Trigger.floatDistance = 0;
