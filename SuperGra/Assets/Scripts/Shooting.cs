@@ -11,16 +11,20 @@ public class Shooting : MonoBehaviour {
 
     // Korzystamy z poolingu obiektów, żeby nie używać Instantiate w trakcie właściwiej gry.
     public ObjectPool bulletPool;
+    public Cooldown attackCooldown;
+
 
 	// Use this for initialization
-	void Start () {
-		// tu chyba nic nie potrzebujemy wiec nawet by chyba moznaby to usunac nie?
-	}
+	void Start ()
+    {
+        attackCooldown.InitCooldown();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
         
-        if (Input.GetButtonDown("Fire1"))
+        if (attackCooldown.canUse && Input.GetButtonDown("Fire1"))
         {
             Shoot();
         }
@@ -61,6 +65,8 @@ public class Shooting : MonoBehaviour {
 
         // zaczęcie korutnyny. 
         StartCoroutine(DestroyBullet(tempProjectile));
+
+        attackCooldown.startTimer();
 
     }
 
