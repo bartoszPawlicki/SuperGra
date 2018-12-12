@@ -27,7 +27,6 @@ public class EnemyHealth : MonoBehaviour
             if (CurrentHealth <= 0)
             {
                 gameObject.SetActive(false);
-
             }
         }
     }

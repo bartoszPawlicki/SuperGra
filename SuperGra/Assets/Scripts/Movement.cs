@@ -7,46 +7,77 @@ public class Movement : MonoBehaviour {
 
     private Vector3 movementVector;                         //Zmienna służąca do poruszania się po wszystkich 3 osiach
     private CharacterController characterController;        //Tworzymy obiekt klasy Character Controller, ktora zostala dodana do obiektu gracza
-    public float movementSpeed = 15;
-    private float gravity = 100;
-    public float rotationSpeed = 10;
-    private float rot;
-
-    //private Vector3 rotateVector;
     private float rotateSpeed = 90;
+    private float gravity = 100;
+    private float rotationX;
+    private float rotationY;
+    private bool check1 = true;
+    private bool check2 = true;
 
-    //private Input aimHorizontal = Input.GetAxis("RightJoystickX");
+    public float movementSpeed = 15;
+    public float rotationSpeed = 10;
+    public float mouseSensitivity = 2.0f;
+    public float joystickDeadZone = 0.2f;
+    public float joystickSensitivity = 1.0f;
 
-
-	void Start () {
+    void Start () {
         characterController = GetComponent<CharacterController>();      //Pobieramy tę dodaną do obiektu klasę
-	}
+    }
 	
 
 	void Update () {
-        movementVector.x = Input.GetAxis("LeftJoystickX") * movementSpeed;      //Poruszanie się po osi X, wartość w cudzysłowie pobrana jest z -> Edit/Project Settings/Input
-        movementVector.z = Input.GetAxis("LeftJoystickY") * movementSpeed;      //Poruszanie po osi Y
+        movementVector.x = Input.GetAxis("Horizontal") * movementSpeed;      //Poruszanie się po osi X, wartość w cudzysłowie pobrana jest z -> Edit/Project Settings/Input
+        movementVector.z = Input.GetAxis("Vertical") * movementSpeed;      //Poruszanie po osi Y
         movementVector.y = 0;
 
         movementVector.y -= gravity * Time.deltaTime;       //Grawitacja, nie bedziemy się poruszać po osi y, bo raczej u nas skoku nie będzie,
                                                             //ale jeśli teren będzie się obniżał, to nasza postać będzie latać, a tego nie chcemy
 
-
-        rot = Input.GetAxis("RightJoystickX");              //To jest część, która sprawiła, ze obrót postaci nie wraca do miejsca początkowego
-        if (rot > 0 || rot < 0)
+        /*if(Input.GetAxis("ChangeControl") != 0)
         {
-            Vector3 lookDirection = new Vector3(Input.GetAxisRaw("RightJoystickX"), 0, Input.GetAxisRaw("RightJoystickY"));
+            check1 = false;
+
+            if(check1 == false)
+            {
+                mouseRotation();
+            }
+
+        }*/
+
+        if (Input.GetAxis("RightJoystickX") != 0)
+        {
+            padRotation();
+        }
+        else
+        {
+            mouseRotation();
+        }
+        characterController.Move(movementVector * Time.deltaTime);      //.Move jest wbudowane, ta funkcja służy czysto do poruszania się
+    }
+
+    private void mouseRotation()
+    {
+        rotationX = Input.mousePosition.x * mouseSensitivity;
+        rotationY = Input.mousePosition.y * mouseSensitivity;
+
+        Vector3 mouse_pos = Input.mousePosition;
+        Vector3 object_pos = Camera.main.WorldToScreenPoint(transform.position);
+        mouse_pos.x = mouse_pos.x - object_pos.x;
+        mouse_pos.y = mouse_pos.y - object_pos.y;
+        float angle = Mathf.Atan2(mouse_pos.y, mouse_pos.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(new Vector3(0, -angle+75, 0));
+
+    }
+
+    private void padRotation()
+    {
+        rotationX = Input.GetAxis("RightJoystickX") * joystickSensitivity;
+        rotationY = Input.GetAxis("RightJoystickY");
+
+        if (rotationX != 0)     //To jest część, która sprawiła, ze obrót postaci nie wraca do miejsca początkowego
+        {
+            Vector3 lookDirection = new Vector3(rotationX, 0, rotationY);
             transform.rotation = Quaternion.LookRotation(lookDirection);
         }
-
-        
-        //transform.localEulerAngles = new Vector3(0, (float)(Math.Atan2(Input.GetAxis("RightJoystickX"), Input.GetAxis("RightJoystickY")) * 180 / Math.PI), 0);
-
-        //float rotation = Input.GetAxis("RightJoystickX") * rotationSpeed;
-        //transform.Rotate(0, rotation, 0);
-
-        characterController.Move(movementVector * Time.deltaTime);      //.Move jest wbudowane, ta funkcja służy czysto do poruszania się
-        
-
     }
 }
