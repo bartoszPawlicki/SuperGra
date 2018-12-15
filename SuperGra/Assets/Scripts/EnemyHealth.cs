@@ -10,11 +10,13 @@ public class EnemyHealth : MonoBehaviour
     GameObject enemy;
     public Room parentRoom;
     ParticleSystem particles;
+    public Cooldown hitCooldown;
 
     void Start ()
     {
         CurrentHealth = StartingHealth;
         particles = GetComponentInChildren<ParticleSystem>();
+        hitCooldown.InitCooldown();
     }
 	
 	void Update ()
@@ -26,15 +28,20 @@ public class EnemyHealth : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Projectile"))
         {
-            particles.Play();
-            CurrentHealth -= 25;
-            if (CurrentHealth <= 0)
+            if(hitCooldown.canUse)
             {
-                //Destroy(gameObject);
+                hitCooldown.startTimer();
+                particles.Play();
+                CurrentHealth -= 25;
+                if (CurrentHealth <= 0)
+                {
+                    //Destroy(gameObject);
 
-                parentRoom.enemies.Remove(gameObject);
-                gameObject.SetActive(false);
+                    parentRoom.enemies.Remove(gameObject);
+                    gameObject.SetActive(false);
+                }
             }
+           
         }
     }
 }
