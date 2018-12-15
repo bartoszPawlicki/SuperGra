@@ -9,15 +9,22 @@ public class PlayerHealth : MonoBehaviour {
     public int currentHealth;
     public Slider healthSlider;
     public Text deathText;
+    ParticleSystem particles;
 
     bool isDead;
     bool damaged;
 
-	void Awake () {
+	void Awake ()
+    {
         currentHealth = startingHealth;
         healthSlider.value = CalculateHealth();
     }
-	int CalculateHealth()
+
+    private void Start()
+    {
+        particles = GetComponentInChildren<ParticleSystem>();
+    }
+    int CalculateHealth()
     {
         return currentHealth / startingHealth;
        
@@ -32,14 +39,17 @@ public class PlayerHealth : MonoBehaviour {
         damaged = true;
         currentHealth -= amount;
         healthSlider.value = currentHealth;
-
-        if(currentHealth <= 0 && !isDead)
+        particles.Play();
+        if (currentHealth <= 0 && !isDead)
         {
             Death();
         }
+
+
     }
     void Death()
     {
+        gameObject.SetActive(false);
         isDead = true;
         //deathText.text = "YOU DEAD SON";
     }

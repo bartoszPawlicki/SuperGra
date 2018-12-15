@@ -9,11 +9,13 @@ public class EnemyHealth : MonoBehaviour
     private float CurrentHealth;
     GameObject enemy;
     public Room parentRoom;
-    
-	void Start ()
+    ParticleSystem particles;
+
+    void Start ()
     {
-        CurrentHealth = StartingHealth; 
-	}
+        CurrentHealth = StartingHealth;
+        particles = GetComponentInChildren<ParticleSystem>();
+    }
 	
 	void Update ()
     {
@@ -24,10 +26,12 @@ public class EnemyHealth : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Projectile"))
         {
+            particles.Play();
             CurrentHealth -= 25;
             if (CurrentHealth <= 0)
             {
                 //Destroy(gameObject);
+
                 parentRoom.enemies.Remove(gameObject);
                 gameObject.SetActive(false);
             }
