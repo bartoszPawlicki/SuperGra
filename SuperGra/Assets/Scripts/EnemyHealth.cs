@@ -8,6 +8,7 @@ public class EnemyHealth : MonoBehaviour
     public int StartingHealth;
     private float CurrentHealth;
     GameObject enemy;
+    public Room parentRoom;
     
 	void Start ()
     {
@@ -26,6 +27,8 @@ public class EnemyHealth : MonoBehaviour
             CurrentHealth -= 25;
             if (CurrentHealth <= 0)
             {
+                //Destroy(gameObject);
+                parentRoom.enemies.Remove(gameObject);
                 gameObject.SetActive(false);
             }
         }
