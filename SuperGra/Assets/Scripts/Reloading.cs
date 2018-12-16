@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GunScript : MonoBehaviour
+public class Reloading : MonoBehaviour
 {
     public int MagazineCapacity;
     public int ammoInMagazine;
+
     public int ammoRemaining;
     public bool canFire;
+
     IEnumerator Reload()
     {
         yield return new WaitForSeconds(5);
@@ -38,9 +40,6 @@ public class GunScript : MonoBehaviour
 
             }
         }
-
-
-        
     }
 }
 
