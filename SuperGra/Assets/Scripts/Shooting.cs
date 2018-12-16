@@ -13,11 +13,14 @@ public class Shooting : MonoBehaviour {
     public ObjectPool bulletPool;
     public Cooldown attackCooldown;
 
+    Reloading reloading;
+
 
 	// Use this for initialization
 	void Start ()
     {
         attackCooldown.InitCooldown();
+        reloading = GetComponent<Reloading>();
 
     }
 	
@@ -33,41 +36,25 @@ public class Shooting : MonoBehaviour {
     //metoda strzelania
     void Shoot()
     {
-
-        ////projectile instantiation
-        //GameObject tempProjectile;
-        //tempProjectile = Instantiate(projectile, shootingObject.transform.position, shootingObject.transform.rotation) as GameObject;
-
-        //Rigidbody tempRigidBody;
-        //tempRigidBody = tempProjectile.GetComponent<Rigidbody>();
-
-        ////nadanie sily pociskowi
-        //tempRigidBody.AddForce(transform.forward * projectileForce);
+        if(reloading.canFire)
+        {
+            reloading.ammoInMagazine--;
+            //alternatywna wersja
+            GameObject tempProjectile = bulletPool.PoolNext(shootingObject.transform.position);
 
 
-
-        ////zniszczenie pocisku po czasie
-        //Destroy(tempProjectile, 3.0f);
-
+            // takie rzeczy można w jednej linijce
+            Rigidbody tempRigidBody = tempProjectile.GetComponent<Rigidbody>();
 
 
+            //nadanie sily pociskowi
+            tempRigidBody.AddForce(transform.forward * projectileForce);
 
-        //alternatywna wersja
-        GameObject tempProjectile = bulletPool.PoolNext(shootingObject.transform.position);
+            // zaczęcie korutnyny. 
+            StartCoroutine(DestroyBullet(tempProjectile));
 
-
-        // takie rzeczy można w jednej linijce
-        Rigidbody tempRigidBody = tempProjectile.GetComponent<Rigidbody>();
-
-
-        //nadanie sily pociskowi
-        tempRigidBody.AddForce(transform.forward * projectileForce);
-
-        // zaczęcie korutnyny. 
-        StartCoroutine(DestroyBullet(tempProjectile));
-
-        attackCooldown.startTimer();
-
+            attackCooldown.startTimer();
+        }  
     }
 
     //Korutyna jest uruchamiana na osobnym wątku, można też wracać do niej po jakimś czasie - coś jak uśpienie fukncji.

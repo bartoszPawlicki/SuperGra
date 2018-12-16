@@ -3,20 +3,18 @@ using System.Collections;
 
 public class Reloading : MonoBehaviour
 {
-    public int MagazineCapacity;
+    public int magazineCapacity;
     public int ammoInMagazine;
 
     public int ammoRemaining;
-    public bool canFire;
+
+    [HideInInspector]
+    public bool canFire = true;
 
     IEnumerator Reload()
     {
-        yield return new WaitForSeconds(5);
-        canFire = true;
-    }
-
-    void Start()
-    {
+        canFire = false;
+        yield return new WaitForSeconds(2);
         canFire = true;
     }
 
@@ -27,10 +25,10 @@ public class Reloading : MonoBehaviour
             if (ammoRemaining >= ammoInMagazine)
             {
                 StartCoroutine("Reload");
-                if (ammoRemaining >= MagazineCapacity)
+                if (ammoRemaining >= magazineCapacity)
                 {
-                    ammoRemaining -= MagazineCapacity;
-                    ammoInMagazine = MagazineCapacity;
+                    ammoRemaining -= magazineCapacity;
+                    ammoInMagazine = magazineCapacity;
                 }
                 else
                 {
