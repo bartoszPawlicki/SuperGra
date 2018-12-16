@@ -27,8 +27,8 @@ public class MenuUI : MonoBehaviour
         quitMenu.enabled = false; //Ukrycie menu z pytaniem o wyjście z gry.
 
         Time.timeScale = 0;//Zatrzymanie czasu.
-        Cursor.visible = manuUI.enabled;//Ukrycie pokazanie kursora myszy.
-        Cursor.lockState = CursorLockMode.Confined;//Odblokowanie kursora myszy.
+        //Cursor.visible = manuUI.enabled;//Ukrycie pokazanie kursora myszy.
+        //Cursor.lockState = CursorLockMode.Confined;//Odblokowanie kursora myszy.
     }
 
 
@@ -56,8 +56,8 @@ public class MenuUI : MonoBehaviour
 
         Time.timeScale = 1;//Właczenie czasu.
 
-        Cursor.visible = false;//Ukrycie kursora.
-        Cursor.lockState = CursorLockMode.Locked; //Zablokowanie kursora myszy.
+        //Cursor.visible = false;//Ukrycie kursora.
+        //Cursor.lockState = CursorLockMode.Locked; //Zablokowanie kursora myszy.
     }
 
     //Metoda wywoływana podczas udzielenia odpowiedzi twierdzącej na pytanie o wyjście z gry.

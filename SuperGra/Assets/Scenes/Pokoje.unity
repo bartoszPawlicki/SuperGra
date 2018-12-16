@@ -5671,7 +5671,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &635309225
 Transform:
   m_ObjectHideFlags: 0
@@ -6634,15 +6634,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 224496528315413442, guid: 6e14729e3c5fc6e419d39a5cafcc3a2f,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224496528315413442, guid: 6e14729e3c5fc6e419d39a5cafcc3a2f,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
+    - target: {fileID: 1837027371053844, guid: 6e14729e3c5fc6e419d39a5cafcc3a2f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224602090720351792, guid: 6e14729e3c5fc6e419d39a5cafcc3a2f,
         type: 3}
@@ -6734,9 +6728,15 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1837027371053844, guid: 6e14729e3c5fc6e419d39a5cafcc3a2f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 224496528315413442, guid: 6e14729e3c5fc6e419d39a5cafcc3a2f,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224496528315413442, guid: 6e14729e3c5fc6e419d39a5cafcc3a2f,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e14729e3c5fc6e419d39a5cafcc3a2f, type: 3}
@@ -8172,6 +8172,11 @@ PrefabInstance:
       propertyPath: changeInput
       value: 
       objectReference: {fileID: 1408376836}
+    - target: {fileID: 114622397961959832, guid: f08e9b2c012cc5947a7242374bba12c0,
+        type: 3}
+      propertyPath: movementSpeed
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 143631238199083652, guid: f08e9b2c012cc5947a7242374bba12c0,
         type: 3}
       propertyPath: m_Enabled
