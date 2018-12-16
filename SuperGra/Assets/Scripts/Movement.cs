@@ -20,12 +20,16 @@ public class Movement : MonoBehaviour {
     public float joystickDeadZone = 0.2f;
     public float joystickSensitivity = 1.0f;
 
-    void Start () {
+    public ChangeInput changeInput;
+
+    void Start ()
+    {
         characterController = GetComponent<CharacterController>();      //Pobieramy tę dodaną do obiektu klasę
     }
 	
 
-	void Update () {
+	void Update ()
+    {
         movementVector.x = Input.GetAxis("Horizontal") * movementSpeed;      //Poruszanie się po osi X, wartość w cudzysłowie pobrana jest z -> Edit/Project Settings/Input
         movementVector.z = Input.GetAxis("Vertical") * movementSpeed;      //Poruszanie po osi Y
         movementVector.y = 0;
@@ -33,25 +37,16 @@ public class Movement : MonoBehaviour {
         movementVector.y -= gravity * Time.deltaTime;       //Grawitacja, nie bedziemy się poruszać po osi y, bo raczej u nas skoku nie będzie,
                                                             //ale jeśli teren będzie się obniżał, to nasza postać będzie latać, a tego nie chcemy
 
-        /*if(Input.GetAxis("ChangeControl") != 0)
-        {
-            check1 = false;
-
-            if(check1 == false)
-            {
-                mouseRotation();
-            }
-
-        }*/
-
-        if (Input.GetAxis("RightJoystickX") != 0)
-        {
-            padRotation();
-        }
-        else
+       
+        if(changeInput.isMouseOn)
         {
             mouseRotation();
         }
+        else 
+        {
+            padRotation();
+        }
+
         characterController.Move(movementVector * Time.deltaTime);      //.Move jest wbudowane, ta funkcja służy czysto do poruszania się
     }
 
