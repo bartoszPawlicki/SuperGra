@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Movement : MonoBehaviour {
+public class Movement : MonoBehaviour
+{
 
     private Vector3 movementVector;                         //Zmienna służąca do poruszania się po wszystkich 3 osiach
     private CharacterController characterController;        //Tworzymy obiekt klasy Character Controller, ktora zostala dodana do obiektu gracza
@@ -20,15 +21,19 @@ public class Movement : MonoBehaviour {
     public float joystickDeadZone = 0.2f;
     public float joystickSensitivity = 1.0f;
 
+    private float dodgeTimer = 0;
+
+    public Cooldown dodgeCooldown;
     public ChangeInput changeInput;
 
-    void Start ()
+    void Start()
     {
+        dodgeCooldown.InitCooldown();
         characterController = GetComponent<CharacterController>();      //Pobieramy tę dodaną do obiektu klasę
     }
-	
 
-	void Update ()
+
+    void Update()
     {
         movementVector.x = Input.GetAxis("Horizontal") * movementSpeed;      //Poruszanie się po osi X, wartość w cudzysłowie pobrana jest z -> Edit/Project Settings/Input
         movementVector.z = Input.GetAxis("Vertical") * movementSpeed;      //Poruszanie po osi Y
@@ -37,12 +42,23 @@ public class Movement : MonoBehaviour {
         movementVector.y -= gravity * Time.deltaTime;       //Grawitacja, nie bedziemy się poruszać po osi y, bo raczej u nas skoku nie będzie,
                                                             //ale jeśli teren będzie się obniżał, to nasza postać będzie latać, a tego nie chcemy
 
-       
-        if(changeInput.isMouseOn)
+        if (dodgeCooldown.canUse && Input.GetButtonDown("Fire2"))
+        {
+            dodgeCooldown.startTimer();
+            dodgeTimer = 0.06f;
+        }
+
+        if (dodgeTimer > 0)
+        {
+            dodgeTimer -= Time.deltaTime;
+            characterController.Move(movementVector * Time.deltaTime * 3);
+        }
+
+        if (changeInput.isMouseOn)
         {
             mouseRotation();
         }
-        else 
+        else
         {
             padRotation();
         }
@@ -60,7 +76,7 @@ public class Movement : MonoBehaviour {
         mouse_pos.x = mouse_pos.x - object_pos.x;
         mouse_pos.y = mouse_pos.y - object_pos.y;
         float angle = Mathf.Atan2(mouse_pos.y, mouse_pos.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(new Vector3(0, -angle+75, 0));
+        transform.rotation = Quaternion.Euler(new Vector3(0, -angle + 75, 0));
 
     }
 
