@@ -7,7 +7,7 @@ public class PlayerHealth : MonoBehaviour {
 
     public int startingHealth = 100;
     public int currentHealth;
-    public Slider healthSlider;
+    public RawImage greenBarImage;
     public Text deathText;
     ParticleSystem particles;
 
@@ -17,28 +17,24 @@ public class PlayerHealth : MonoBehaviour {
 	void Awake ()
     {
         currentHealth = startingHealth;
-        healthSlider.value = CalculateHealth();
+        greenBarImage.rectTransform.localScale = new Vector3(currentHealth * 1.0f / startingHealth, 1f, 1f);
     }
 
     private void Start()
     {
         particles = GetComponentInChildren<ParticleSystem>();
     }
-    int CalculateHealth()
-    {
-        return currentHealth / startingHealth;
-       
-    }
 	void Update ()
     {
-        healthSlider.value = (currentHealth * 1.0f  / startingHealth);        //Jeszcze trzeba bedzie polaczyc to w jakim momencie gracz dostaje DMG
-	}
+            //Jeszcze trzeba bedzie polaczyc to w jakim momencie gracz dostaje DMG
+
+    }
 
     public void TakeDamage (int amount)
     {
+        greenBarImage.rectTransform.localScale = new Vector3(currentHealth * 1.0f / startingHealth, 1f, 1f);
         damaged = true;
         currentHealth -= amount;
-        healthSlider.value = currentHealth;
         particles.Play();
         if (currentHealth <= 0 && !isDead)
         {
@@ -49,6 +45,7 @@ public class PlayerHealth : MonoBehaviour {
     }
     void Death()
     {
+        greenBarImage.rectTransform.localScale = new Vector3(currentHealth * 1.0f / startingHealth, 1f, 1f);
         gameObject.SetActive(false);
         isDead = true;
         //deathText.text = "YOU DEAD SON";
