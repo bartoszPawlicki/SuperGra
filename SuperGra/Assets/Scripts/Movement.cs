@@ -12,8 +12,6 @@ public class Movement : MonoBehaviour
     private float gravity = 100;
     private float rotationX;
     private float rotationY;
-    private bool check1 = true;
-    private bool check2 = true;
 
     public float movementSpeed = 15;
     public float rotationSpeed = 10;
