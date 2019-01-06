@@ -7,6 +7,7 @@ public class Movement : MonoBehaviour
 {
 
     private Vector3 movementVector;                         //Zmienna służąca do poruszania się po wszystkich 3 osiach
+    private Vector3 lastNonZeroMovementVector;
     private CharacterController characterController;        //Tworzymy obiekt klasy Character Controller, ktora zostala dodana do obiektu gracza
     private float rotateSpeed = 90;
     private float gravity = 100;
@@ -33,24 +34,25 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        movementVector.x = Input.GetAxis("Horizontal") * movementSpeed;      //Poruszanie się po osi X, wartość w cudzysłowie pobrana jest z -> Edit/Project Settings/Input
-        movementVector.z = Input.GetAxis("Vertical") * movementSpeed;      //Poruszanie po osi Y
+        movementVector.x = Input.GetAxis("Horizontal");      //Poruszanie się po osi X, wartość w cudzysłowie pobrana jest z -> Edit/Project Settings/Input
+        movementVector.z = Input.GetAxis("Vertical");      //Poruszanie po osi Y
         movementVector.y = 0;
 
-        movementVector.y -= gravity * Time.deltaTime;       //Grawitacja, nie bedziemy się poruszać po osi y, bo raczej u nas skoku nie będzie,
+        //movementVector.y -= gravity * Time.deltaTime;       //Grawitacja, nie bedziemy się poruszać po osi y, bo raczej u nas skoku nie będzie,
                                                             //ale jeśli teren będzie się obniżał, to nasza postać będzie latać, a tego nie chcemy
 
+        if (movementVector.x != 0 || movementVector.z != 0)
+        {
+            lastNonZeroMovementVector = movementVector;
+        }
+            
         if (dodgeCooldown.canUse && Input.GetButtonDown("Fire2"))
         {
             dodgeCooldown.startTimer();
             dodgeTimer = 0.06f;
         }
 
-        if (dodgeTimer > 0)
-        {
-            dodgeTimer -= Time.deltaTime;
-            characterController.Move(movementVector * Time.deltaTime * 3);
-        }
+        
 
         if (changeInput.isMouseOn)
         {
@@ -61,7 +63,18 @@ public class Movement : MonoBehaviour
             padRotation();
         }
 
-        characterController.Move(movementVector * Time.deltaTime);      //.Move jest wbudowane, ta funkcja służy czysto do poruszania się
+        characterController.Move(movementVector * Time.deltaTime * movementSpeed);      //.Move jest wbudowane, ta funkcja służy czysto do poruszania się
+        characterController.Move(Vector3.down);
+    }
+
+    private void FixedUpdate()
+    {
+        if (dodgeTimer > 0)
+        {
+            Debug.Log("dupa: " + lastNonZeroMovementVector + " " + lastNonZeroMovementVector.normalized);
+            dodgeTimer -= Time.deltaTime;
+            characterController.Move(lastNonZeroMovementVector.normalized * movementSpeed * Time.deltaTime * 3);
+        }
     }
 
     private void mouseRotation()
