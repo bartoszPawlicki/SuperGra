@@ -6,6 +6,9 @@ public class TrigCloseDoor : MonoBehaviour
 {
     private void OnTriggerExit(Collider other)
     {
-        transform.parent.GetComponent<DoorController>().ChangeDoorState(DoorController.DoorState.movingDown);
+        if (other.tag == "Player")
+        {
+            transform.parent.GetComponent<DoorController>().ChangeDoorState(DoorController.DoorState.movingDown);
+        }
     }
 }
