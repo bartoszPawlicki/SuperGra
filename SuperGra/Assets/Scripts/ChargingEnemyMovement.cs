@@ -24,7 +24,7 @@ public class ChargingEnemyMovement : MonoBehaviour
         nav.SetDestination(player.position);
         chargeUsed = false;
         Charge();
-        //Exhaustion();
+        
     }
 
     void Charge()
@@ -33,6 +33,7 @@ public class ChargingEnemyMovement : MonoBehaviour
         {
             chargeCooldown.startTimer();
             chargeTimer = 0.04f;
+            chargeUsed = true;
         }
 
         if(chargeTimer > 0)
@@ -41,9 +42,13 @@ public class ChargingEnemyMovement : MonoBehaviour
             Vector3 pom = player.position;
             nav.SetDestination(pom);
             nav.speed = nav.speed * 3;
+            
         }
 
-        chargeUsed = true;
+        if(chargeTimer <= 0)
+        {
+            Exhaustion();
+        }
     }
 
     void Exhaustion()
@@ -55,9 +60,10 @@ public class ChargingEnemyMovement : MonoBehaviour
 
         stopTimer -= Time.deltaTime;
 
-        if(stopTimer == 0)
+        if(stopTimer <= 0)
         {
             nav.isStopped = false;
+            stopTimer = 1.0f;
         }
     }
 }
